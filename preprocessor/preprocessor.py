@@ -387,3 +387,10 @@ class Preprocessor:
             min_value = min(min_value, min(values))
 
         return min_value, max_value
+
+    def convert_textgrid(self, tg_path):
+        textgrid = tgt.io.read_textgrid(tg_path)
+        phone, duration, start, end = self.get_alignment(
+            textgrid.get_tier_by_name("phones")
+        )
+        phone
