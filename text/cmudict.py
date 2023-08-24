@@ -88,6 +88,22 @@ valid_symbols = [
     "Y",
     "Z",
     "ZH",
+    "OH",
+    "OH0",
+    "OH1",
+    "OH2",
+    "IR",
+    "IR0",
+    "IR1",
+    "IR2",
+    "AR",
+    "AR0",
+    "AR1",
+    "AR2",
+    "UR",
+    "UR0",
+    "UR1",
+    "UR2"
 ]
 
 _valid_symbol_set = set(valid_symbols)
