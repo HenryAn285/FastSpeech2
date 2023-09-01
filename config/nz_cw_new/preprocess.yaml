@@ -1,4 +1,4 @@
-dataset: "YourDataSet" # change this
+dataset: "nz_cw_new" # change this
 
 path:
   corpus_path: "./nz_cw_new" # change this

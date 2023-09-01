@@ -1,10 +1,141 @@
 import tgt
 import os
-from epitran.flite import Flite
+
+def check_textgrid(textgrid):
+    valid_symbols = [
+        "AA",
+        "AA0",
+        "AA1",
+        "AA2",
+        "AE",
+        "AE0",
+        "AE1",
+        "AE2",
+        "AH",
+        "AH0",
+        "AH1",
+        "AH2",
+        "AO",
+        "AO0",
+        "AO1",
+        "AO2",
+        "AW",
+        "AW0",
+        "AW1",
+        "AW2",
+        "AY",
+        "AY0",
+        "AY1",
+        "AY2",
+        "B",
+        "CH",
+        "D",
+        "DH",
+        "EH",
+        "EH0",
+        "EH1",
+        "EH2",
+        "ER",
+        "ER0",
+        "ER1",
+        "ER2",
+        "EY",
+        "EY0",
+        "EY1",
+        "EY2",
+        "F",
+        "G",
+        "HH",
+        "IH",
+        "IH0",
+        "IH1",
+        "IH2",
+        "IY",
+        "IY0",
+        "IY1",
+        "IY2",
+        "JH",
+        "K",
+        "L",
+        "M",
+        "N",
+        "NG",
+        "OW",
+        "OW0",
+        "OW1",
+        "OW2",
+        "OY",
+        "OY0",
+        "OY1",
+        "OY2",
+        "P",
+        "R",
+        "S",
+        "SH",
+        "T",
+        "TH",
+        "UH",
+        "UH0",
+        "UH1",
+        "UH2",
+        "UW",
+        "UW0",
+        "UW1",
+        "UW2",
+        "V",
+        "W",
+        "Y",
+        "Z",
+        "ZH",
+        "OH",
+        "OH0",
+        "OH1",
+        "OH2",
+        "IR",
+        "IR0",
+        "IR1",
+        "IR2",
+        "AR",
+        "AR0",
+        "AR1",
+        "AR2",
+        "UR",
+        "UR0",
+        "UR1",
+        "UR2"
+    ]
+    tier = textgrid.get_tier_by_name("phones")
+
+    for t in tier._objects:
+        p = t.text
+        if not (p in valid_symbols):
+            print(tier)
+            return False
+
+    return True
+
+def convert_textgrids(dictionary, folder):
+    if not os.path.exists("converted/" + folder):
+     os.makedirs("converted/" + folder)
+
+    for tg_path in os.listdir(folder):
+
+        textgrid = tgt.io.read_textgrid(folder+"/"+tg_path, include_empty_intervals=True)
+
+        tier =  textgrid.get_tier_by_name("phones")
+        for t in tier._objects:
+            p = t.text
+            new_p = dictionary[p]
+            #print(new_p)
+            t.text=new_p
+            #print(t.text)
+        #print(tier)
+        #with open ("converted/"+folder+"/"+tg_path, "w",encoding="utf-8") as f:
+            #f.write(textgrid)
+        tgt.io.write_to_file(textgrid, "converted/"+folder+"/"+tg_path, format='short', encoding='utf-8',)
 
 
 def summarise_textgrids(folder):
-    FLITE = Flite()
     phones=[]
     for tg_path in os.listdir(folder):
 
@@ -16,22 +147,20 @@ def summarise_textgrids(folder):
             if not(p in phones):
                 print(p)
                 phones.append(p)
-
+        check_textgrid(textgrid)
     with open("ipa_phones.txt", 'w', encoding="utf-8") as f:
         f.write(str(phones))
 
 
 if __name__ == '__main__':
-    FLITE = Flite()
-    ARPA_IPA = FLITE.arpa_map.values()
-    print(ARPA_IPA)
-    IPA_to_ARPABET={'ʊ':'OO', 'p':'P', 's':'S', 'spn':'spn', 'd̪':'D', 'ɪ':'IH', 'z':'Z', 'ə':'AX', 'ʎ':'L', 'ɾ':'D', 'ɫ':'L',
-                    'm':'M', 'b':'B', 'ɛ':'EH', 'ɹ':'R', 'ŋ':'NG', 'ɐ':'AH', 'ʔ':'Q', 'f':'F', 'ɒ':'AR', 'l':'L', 'pʰ':'P',
+
+    IPA_to_ARPABET={'':'','ʊ':'OO', 'p':'P', 's':'S', 'spn':'spn', 'd̪':'D', 'ɪ':'IH', 'z':'Z', 'ə':'AX', 'ʎ':'L', 'ɾ':'D', 'ɫ':'L',
+                    'm':'M', 'b':'B', 'ɛ':'EH', 'ɹ':'R', 'ŋ':'NG', 'ɐ':'AH', 'ʔ':'Q', 'f':'F', 'ɒ':'AA', 'l':'L', 'pʰ':'P',
                     't':'T', 'kʰ':'K', 'd':'D', 'j':'J', 'ʉː':'UW', 'iː':'IY', 'n':'N', 'tʰ':'T', 'a':'AR', 'k':'K', 'aw':'AW',
-                    'ð':'DH', 'aj':'AY', 'ɒː':'AR', 'ɡ':'G', 'ow':'OW', 'h':'H', 'æ':'AE', 'ej':'EY', 'dʲ':'d', 'cʰ':'K', 'ʃ':'SH',
+                    'ð':'DH', 'aj':'AY', 'ɒː':'AA', 'ɡ':'G', 'ow':'OW', 'h':'H', 'æ':'AE', 'ej':'EY', 'dʲ':'d', 'cʰ':'K', 'ʃ':'SH',
                     'w': 'W', 'dʒ':'J', 'uː':'UW', 'ɟ':'G', 't̪':'T', 'u':'UW', 'mʲ':'M', 'əw':'OW', 'i':'IY', 'ʒ':'ZH', 'ɚ':'ER',
-                    'v':'V', 'θ':'TH', 'tʲ':'TH', 'ɲ':'N', 'ɑː':'AR', 'e':'EH', 'ɫ̩':'L', 'ɑ':'AH', 'fʲ':'F', 'cʷ':'K','tʃ':'CH',
-                    'c':'K', 'ɜː':'E', 'pʲ':'P', 'ç':'H', 'bʲ':'B', 'ɔ':'OH', 'vʲ':'V', 'ɔj':'OY', 'ʉ':'UW', 'kʷ':'K', 'ɛː':'E',
+                    'v':'V', 'θ':'TH', 'tʲ':'TH', 'ɲ':'N', 'ɑː':'AR', 'e':'EH', 'ɫ̩':'L', 'ɑ':'AR', 'fʲ':'F', 'cʷ':'K','tʃ':'CH',
+                    'c':'K', 'ɜː':'E', 'pʲ':'P', 'ç':'H', 'bʲ':'B', 'ɔ':'AO', 'vʲ':'V', 'ɔj':'OY', 'ʉ':'UW', 'kʷ':'K', 'ɛː':'E',
                     'tʷ':'T', 'ɝ':'ER', 'ɟʷ':'G', 'aː':'AR'}
     ARPABET_TO_IPA ={
         "AA": "ɑ",
@@ -76,4 +205,4 @@ if __name__ == '__main__':
         "ZH": "ʒ"
     }
 
-    summarise_textgrids("wavs_aligned")
+    convert_textgrids(IPA_to_ARPABET,"wavs_aligned")
