@@ -3,6 +3,7 @@ import os
 
 def check_textgrid(textgrid):
     valid_symbols = [
+        "spn",
         "AA",
         "AA0",
         "AA1",
@@ -27,6 +28,7 @@ def check_textgrid(textgrid):
         "AY0",
         "AY1",
         "AY2",
+        "AX",
         "B",
         "CH",
         "D",
@@ -102,13 +104,17 @@ def check_textgrid(textgrid):
         "UR",
         "UR0",
         "UR1",
-        "UR2"
+        "UR2",
+        "Q",
+        "J",
+        "H"
     ]
     tier = textgrid.get_tier_by_name("phones")
 
     for t in tier._objects:
         p = t.text
         if not (p in valid_symbols):
+            print(p)
             print(tier)
             return False
 
@@ -126,12 +132,20 @@ def convert_textgrids(dictionary, folder):
         for t in tier._objects:
             p = t.text
             new_p = dictionary[p]
+            if new_p is 'd':
+                new_p = 'D'
+                print(new_p)
             #print(new_p)
             t.text=new_p
+
             #print(t.text)
         #print(tier)
         #with open ("converted/"+folder+"/"+tg_path, "w",encoding="utf-8") as f:
             #f.write(textgrid)
+        if not check_textgrid(textgrid):
+            print(folder+"/"+tg_path)
+            print("false " + new_p)
+
         tgt.io.write_to_file(textgrid, "converted/"+folder+"/"+tg_path, format='short', encoding='utf-8',)
 
 
@@ -154,13 +168,13 @@ def summarise_textgrids(folder):
 
 if __name__ == '__main__':
 
-    IPA_to_ARPABET={'':'','ʊ':'OO', 'p':'P', 's':'S', 'spn':'spn', 'd̪':'D', 'ɪ':'IH', 'z':'Z', 'ə':'AX', 'ʎ':'L', 'ɾ':'D', 'ɫ':'L',
+    IPA_to_ARPABET={'':'spn','ʊ':'UH', 'p':'P', 's':'S', 'spn':'spn', 'd̪':'D', 'ɪ':'IH', 'z':'Z', 'ə':'AX', 'ʎ':'L', 'ɾ':'D', 'ɫ':'L',
                     'm':'M', 'b':'B', 'ɛ':'EH', 'ɹ':'R', 'ŋ':'NG', 'ɐ':'AH', 'ʔ':'Q', 'f':'F', 'ɒ':'AA', 'l':'L', 'pʰ':'P',
                     't':'T', 'kʰ':'K', 'd':'D', 'j':'J', 'ʉː':'UW', 'iː':'IY', 'n':'N', 'tʰ':'T', 'a':'AR', 'k':'K', 'aw':'AW',
                     'ð':'DH', 'aj':'AY', 'ɒː':'AA', 'ɡ':'G', 'ow':'OW', 'h':'H', 'æ':'AE', 'ej':'EY', 'dʲ':'d', 'cʰ':'K', 'ʃ':'SH',
                     'w': 'W', 'dʒ':'J', 'uː':'UW', 'ɟ':'G', 't̪':'T', 'u':'UW', 'mʲ':'M', 'əw':'OW', 'i':'IY', 'ʒ':'ZH', 'ɚ':'ER',
                     'v':'V', 'θ':'TH', 'tʲ':'TH', 'ɲ':'N', 'ɑː':'AR', 'e':'EH', 'ɫ̩':'L', 'ɑ':'AR', 'fʲ':'F', 'cʷ':'K','tʃ':'CH',
-                    'c':'K', 'ɜː':'E', 'pʲ':'P', 'ç':'H', 'bʲ':'B', 'ɔ':'AO', 'vʲ':'V', 'ɔj':'OY', 'ʉ':'UW', 'kʷ':'K', 'ɛː':'E',
+                    'c':'K', 'ɜː':'AX', 'pʲ':'P', 'ç':'H', 'bʲ':'B', 'ɔ':'AO', 'vʲ':'V', 'ɔj':'OY', 'ʉ':'UW', 'kʷ':'K', 'ɛː':'EH',
                     'tʷ':'T', 'ɝ':'ER', 'ɟʷ':'G', 'aː':'AR'}
     ARPABET_TO_IPA ={
         "AA": "ɑ",

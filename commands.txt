@@ -1,1 +1,12 @@
+python prepare_align.py config/nz_cw_new/preprocess.yaml
+
 python preprocess.py config/nz_cw_new/preprocess.yaml
+
+python train.py -p  config/nz_cw_new/preprocess.yaml -m config/nz_cw_new/model.yaml -t config/nz_cw_new/train.yaml
+python train.py --restore_step 10000 -p  config/nz_cw_new/preprocess.yaml -m config/nz_cw_new/model.yaml -t config/nz_cw_new/train.yaml
+
+
+tensorboard --logdir output/log/nz_cw_new
+
+python synthesize.py --text "Hello ten thousand step synthesis test" --restore_step 10000 --mode single -p config/nz_cw_new/preprocess.yaml -m config/nz_cw_new/model.yaml -t config/nz_cw_new/train.yaml
+python synthesize.py --text "There are a lot of languages in this world and I can speak a few of them" --restore_step 15000 --mode single -p config/nz_cw_new/preprocess.yaml -m config/nz_cw_new/model.yaml -t config/nz_cw_new/train.yaml

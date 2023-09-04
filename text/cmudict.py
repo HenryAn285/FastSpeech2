@@ -2,8 +2,8 @@
 
 import re
 
-
 valid_symbols = [
+    "spn",
     "AA",
     "AA0",
     "AA1",
@@ -28,6 +28,7 @@ valid_symbols = [
     "AY0",
     "AY1",
     "AY2",
+    "AX",
     "B",
     "CH",
     "D",
@@ -103,7 +104,10 @@ valid_symbols = [
     "UR",
     "UR0",
     "UR1",
-    "UR2"
+    "UR2",
+    "Q",
+    "J",
+    "H"
 ]
 
 _valid_symbol_set = set(valid_symbols)
