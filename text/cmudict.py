@@ -29,6 +29,9 @@ valid_symbols = [
     "AY1",
     "AY2",
     "AX",
+    "AX0"
+    "AX1",
+    "AX2",
     "B",
     "CH",
     "D",
