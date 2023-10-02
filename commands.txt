@@ -1,18 +1,40 @@
 python prepare_align.py config/nz_cw_new/preprocess.yaml
 python prepare_align.py config/LJSpeech/preprocess.yaml
+python prepare_align.py config/YourLanguage/preprocess.yaml
+
 
 
 python preprocess.py config/nz_cw_new/preprocess.yaml
 python preprocess.py config/LJSpeech/preprocess.yaml
+python preprocess.py config/YourLanguage/preprocess.yaml
+
 
 
 python train.py -p  config/nz_cw_new/preprocess.yaml -m config/nz_cw_new/model.yaml -t config/nz_cw_new/train.yaml
+python train.py -p  config/nz_cw_new/preprocess.yaml -m config/nz_cw_new/model.yaml -t config/nz_cw_new/train.yaml
+
 python train.py --restore_step 10000 -p  config/nz_cw_new/preprocess.yaml -m config/nz_cw_new/model.yaml -t config/nz_cw_new/train.yaml
 
 python train.py -p  config/LJSpeech/preprocess.yaml -m config/LJSpeech/model.yaml -t config/LJSpeech/train.yaml
+
+python train.py -p  config/YourLanguage/preprocess.yaml -m config/YourLanguage/model.yaml -t config/YourLanguage/train.yaml
+python train.py --restore_step 10000  -p  config/YourLanguage/preprocess.yaml -m config/YourLanguage/model.yaml -t config/YourLanguage/train.yaml
+python train.py --restore_step 20000  -p  config/YourLanguage/preprocess.yaml -m config/YourLanguage/model.yaml -t config/YourLanguage/train.yaml
+
 
 
 tensorboard --logdir output/log/nz_cw_new
 
 python synthesize.py --text "Hello ten thousand step synthesis test" --restore_step 10000 --mode single -p config/nz_cw_new/preprocess.yaml -m config/nz_cw_new/model.yaml -t config/nz_cw_new/train.yaml
 python synthesize.py --text "There are a lot of languages in this world and I can speak a few of them" --restore_step 15000 --mode single -p config/nz_cw_new/preprocess.yaml -m config/nz_cw_new/model.yaml -t config/nz_cw_new/train.yaml
+
+python synthesize.py --text "Test of synthesis" --restore_step 100 --mode single -p config/YourLanguage/preprocess.yaml -m config/YourLanguage/model.yaml -t config/YourLanguage/train.yaml
+python synthesize.py --text "There are a lot of languages in this world and I can speak a few of them two" --restore_step 10000 --mode single -p config/YourLanguage/preprocess.yaml -m config/YourLanguage/model.yaml -t config/YourLanguage/train.yaml
+python synthesize.py --text "There are a lot of languages in this world and I can speak a few of them two" --restore_step 30000 --mode single -p config/YourLanguage/preprocess.yaml -m config/YourLanguage/model.yaml -t config/YourLanguage/train.yaml
+python synthesize.py --text "There are a lot of languages in this world and I can speak a few of them three" --restore_step 20000 --mode single -p config/YourLanguage/preprocess.yaml -m config/YourLanguage/model.yaml -t config/YourLanguage/train.yaml
+python synthesize.py --text "an eye for an eye" --restore_step 30000 --mode single -p config/YourLanguage/preprocess.yaml -m config/YourLanguage/model.yaml -t config/YourLanguage/train.yaml
+python synthesize.py --text "Heard, foot, hud, heed, head, had, hard, hod, thought, goose, heard, hid." --restore_step 20000 --mode single -p config/YourLanguage/preprocess.yaml -m config/YourLanguage/model.yaml -t config/YourLanguage/train.yaml
+
+
+python synthesize.py --source hvd.txt --restore_step 30000 --mode batch -p config/YourLanguage/preprocess.yaml -m config/YourLanguage/model.yaml -t config/YourLanguage/train.yaml
+python synthesize.py --source val.txt --restore_step 30000 --mode batch -p config/YourLanguage/preprocess.yaml -m config/YourLanguage/model.yaml -t config/YourLanguage/train.yaml

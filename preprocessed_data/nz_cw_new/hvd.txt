@@ -1,0 +1,13 @@
+hid|eng|nz_cw_new|{H IH D}|hid
+hud|eng|nz_cw_new|{H AH D}|hud
+hood|eng|nz_cw_new|{H UH D}|hood
+who'd|eng|nz_cw_new|{H UW D|who'd
+had|eng|nz_cw_new|{H AE D}|had
+head|eng|nz_cw_new|{H EH D}|head
+hod|eng|nz_cw_new|{H AA D}|hod
+heard|eng|nz_cw_new|{H ER D}|heard
+hard|eng|nz_cw_new|{H AR D}|hard
+horde|eng|nz_cw_new|{H AO D}|horde
+how'd|eng|nz_cw_new|{H AW D}|how'd
+hide|eng|nz_cw_new|{H AY D}|hide
+heed|eng|nz_cw_new|{H IY D}|heed

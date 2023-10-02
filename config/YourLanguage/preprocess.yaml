@@ -1,9 +1,9 @@
-dataset: "YourDataSet" # change this
+dataset: "nz_cw_new" # change this
 
 path:
   corpus_path: "./nz_cw_new" # change this
   lexicon_path: "lexicon/librispeech-lexicon.txt" # change this
-  raw_path: "./raw_data/nz_cw_nw" # change this
+  raw_path: "./raw_data/nz_cw_new" # change this
   preprocessed_path: "./preprocessed_data/nz_cw_new" # change this
 
 preprocessing:

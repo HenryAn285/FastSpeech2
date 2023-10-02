@@ -18,8 +18,8 @@ def phoneme_convert_en_NZ(phoneme):
     simple = ['p', 'b', 'f', 'v', 'T', 'D', 's', 'z', 'S', 'Z', 't', 'd', '4', 'j', 'k', 'g', 'N', 'h', 'I', 'e', '{', '0', 'U', '6', 'o']
     mapping = {'w':'W', 'p': 'P', 'b': 'B', 'f': 'F', 'v': 'V', 'T': 'TH', 'D': 'DH', 's': 'S', 'z': 'Z', 'S': 'SH', 'Z': 'ZH', 't': 'T', 'd': 'D', '4' : 'DX', 'j': 'Y',
                'k': 'K', 'g': 'G', 'N': 'NG', 'h': 'H', 'n': 'N', 'm': 'M', 'l': 'L',  'r\\': 'R', 'I': 'IH', 'e': 'EH', '{': 'AE', '0': 'OH', 'U': 'UH', '6': 'AH', 'o': 'OW',
-               '6:': 'AA', 'i:': 'IY', '{I': 'EY', 'o:': 'AO', '@}': 'OW', '}:': 'UX', 'Ae': 'AY', 'oI': 'OY', '3:': 'ER', '@': 'AX', 'U\\': 'Y UW', 'l=': 'EL', 'm=': 'EM', 'n=': 'EM',
-                'I@': 'IR', 'e:': 'IR', }
+               '6:': 'AA', 'i:': 'IY', '{I': 'EY', 'o:': 'AO', '@}': 'OW', '}:': 'UX', 'Ae': 'AY', 'oI': 'OY', '3:': 'ER', '@': 'AX', 'U\\': 'Y UW', 'l=': 'EL',
+               'm=': 'EM', 'n=': 'EM', 'I@': 'IR', 'e:': 'IR', }
     vowels = ['AA', 'AE', 'AH', 'AO', 'AW', 'AX', 'AY', 'IH', 'EH', 'ER',  'EY', 'IR', 'IY', 'OW',  'OY', 'UH', 'UW']
     new_phonemes = ''
     syllables = phoneme.split('-')

@@ -7,13 +7,18 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
+import json
 
+import tools
 from utils.model import get_model, get_vocoder, get_param_num
 from utils.tools import to_device, log, synth_one_sample
 from model import FastSpeech2Loss
 from dataset import Dataset
 
 from evaluate import evaluate
+
+import numpy as np
+from synthesize import synthesize, preprocess_mandarin, preprocess_english, preprocess
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -195,7 +200,35 @@ def main(args, configs):
                             "{}.pth.tar".format(step),
                         ),
                     )
+                    #print("Configs")
+                    #print(configs)
+                    #print("Batchs")
+                    #print(batchs)
+                    #print("synthbatchs")
+                    text = str(step) + " Heard, foot, hud, heed, head, had, hard, hod, thought, goose, heard, hid"
+                    ids = raw_texts = [text]
+                    speakers = np.array([0])
+                    languages = np.array([0])
+                    preprocessed_path = preprocess_config["path"]["preprocessed_path"]
+                    texts = np.array([preprocess_english(text, preprocess_config)])
 
+                    text_lens = np.array([len(texts[0])])
+                    synthbatchs = [
+                        (ids, raw_texts, languages, speakers, texts, text_lens, max(text_lens))
+                    ]
+                    #print(synthbatchs)
+                    synthesize(model, step, configs, vocoder, synthbatchs, [1, 1, 1])
+                    #print(os. getcwd())
+                    original = os. getcwd()
+                    path = "output/result/nz_cw_new/"
+                    with open(path + "sample"+ str(step) + ".txt", "w") as f:
+                        f.write(text)
+
+                    os.chdir(path)
+                    os.rename(text+".wav", "sample"+str(step)+".wav")
+                    df, fig = tools.plotFormants(["sample"+str(step)],
+                                                 ["{", "}:", "3:", "6", "6:", "e", "I", "i:", "O", "o:", "U"], "eng-NZ", True)
+                    os.chdir(original)
                 if step == total_step:
                     quit()
                 step += 1

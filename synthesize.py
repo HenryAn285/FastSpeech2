@@ -127,6 +127,10 @@ def preprocess(text, preprocess_config, lang):
 
 
 def synthesize(model, step, configs, vocoder, batchs, control_values):
+    print("configs")
+    print(configs)
+    print("batchs")
+    print(batchs)
     preprocess_config, model_config, train_config = configs
     pitch_control, energy_control, duration_control = control_values
     for batch in batchs:
