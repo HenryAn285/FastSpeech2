@@ -402,6 +402,7 @@ def plotTrajectories(folderNames, vowels, language):  # Formant trajectory plot
     return df
 
 def plotTrajectoriesByVowel(folderNames, vowels, language):  # Formant trajectory plot
+    global f1, f2
     import os
     import requests
     import pandas as pd
@@ -459,25 +460,26 @@ def plotTrajectoriesByVowel(folderNames, vowels, language):  # Formant trajector
     for i in vowels:
         print("vowel")
         print(i)
-        for mode in range(0,3):
-            vl = []
-            f1l = []
-            f2l = []
-            for index,folder in enumerate(folderNames):
-                data = []
+        vl = []
+        f1l = []
+        f2l = []
+        fl = []
+        for index,folder in enumerate(folderNames):
+            data = []
 
-                print(index)
-                print(folder)
-                path = os.getcwd() +"\\"+ folder
-                os.chdir(path)
-                print(os.getcwd())
-                namelist = os.listdir(path)
-                fileNames =[]
-                for name in namelist:
-                    unique = name.split(".")[0]
-                    if unique not in fileNames:
-                        fileNames.append(unique)
 
+            print(index)
+            print(folder)
+            path = os.getcwd() +"\\"+ folder
+            os.chdir(path)
+            print(os.getcwd())
+            namelist = os.listdir(path)
+            fileNames =[]
+            for name in namelist:
+                unique = name.split(".")[0]
+                if unique not in fileNames:
+                    fileNames.append(unique)
+            for mode in range(0,3):
 
                 for fileName in fileNames:
                     # Call WebMaus Basic Api to generate TextGrids.
@@ -510,16 +512,17 @@ def plotTrajectoriesByVowel(folderNames, vowels, language):  # Formant trajector
                             vl.append(j.text)
                             f1l.append(f1)
                             f2l.append(f2)
+                            fl.append(folder)
 
                 # Store formant values in dataframe.
-                d = {'vowel': vl, 'f1': f1l, 'f2': f2l, 'folder': folder}
+                d = {'vowel': vl, 'f1': f1l, 'f2': f2l, 'folder': fl}
                 df = pd.DataFrame(d)
                 f1Centroid = df.groupby('folder')['f1'].apply(lambda x: np.mean(x.tolist(), axis=0))
                 f2Centroid = df.groupby('folder')['f2'].apply(lambda x: np.mean(x.tolist(), axis=0))
                 d = {'f1': f1Centroid, 'f2': f2Centroid, 'steps': mode, 'point': mode}
                 df2 = pd.DataFrame(d)
                 data.append(df2)  # Append formant values for current training step
-                os.chdir(originpath)
+            os.chdir(originpath)
         full = pd.concat(data)  # Formant trajectory plot
         df = full
         fig = px.line(full, x="f2", y="f1", color=df.index, width=1000, height=900, line_shape='spline', text='steps',
