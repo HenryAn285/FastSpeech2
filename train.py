@@ -226,8 +226,8 @@ def main(args, configs):
 
                     os.chdir(path)
                     os.rename(text+".wav", "sample"+str(step)+".wav")
-                    df, fig = tools.plotFormants(["sample"+str(step)],
-                                                 ["{", "}:", "3:", "6", "6:", "e", "I", "i:", "O", "o:", "U"], "eng-NZ", True)
+                    df, fig = tools.plotTrajectories(["sample"+str(step)],
+                                                 ["{", "}:", "3:", "6", "6:", "e", "I", "i:", "O", "o:", "U"], "eng-NZ")
                     os.chdir(original)
                 if step == total_step:
                     quit()
